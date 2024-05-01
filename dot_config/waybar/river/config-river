@@ -1,0 +1,89 @@
+{
+	"layer": "top",
+	"modules-left": ["river/tags","tray"],
+	"modules-center": ["clock"],
+	"modules-right": ["custom/updates","network","backlight","idle_inhibitor", "pulseaudio", "battery","custom/power"],
+	
+	"pulseaudio": {
+		"tooltip": false,
+		"scroll-step": 5,
+		"format": "{icon} {volume}%",
+		"format-muted": "{icon} {volume}%",
+		"on-click":"pactl set-sink-mute @DEFAULT_SINK@ toggle",
+		"format-icons": {
+			"default": ["", "", ""]
+		}
+	},
+
+    "river/tags": {
+		"num-tags": 9
+    },
+	"network": {
+		"tooltip": false,
+		"format-wifi": "  {essid}",
+		"format-ethernet": ""
+	},
+  "idle_inhibitor": {
+    "spacing": 10,
+    "format": "{icon}",
+    "on-click-right": "~/.local/bin/statusbar/idleinhibit toggle",
+    "format-icons": {
+        "activated": "",
+        "deactivated": ""
+    }
+  },
+	"backlight": {
+		"tooltip": false,
+		"format": " {}%",
+		"interval":1,
+        "on-scroll-up": "light -A 5",
+		"on-scroll-down": "light -U 5"
+	},
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 20
+        },
+        "format": "{icon}  {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["", "", "", "", ""]
+  },
+	"tray":{
+		"icon-size":18,
+		"spacing": 10
+	},
+    "clock": {
+        "format": "{: %H:%M %p  %d/%m/%Y}"
+    },
+    "cpu": {
+        "interval": 15,
+        "format": " {}%",
+        "max-length": 10
+    },
+    "memory": {
+        "interval": 30,
+        "format": " {}%",
+        "max-length": 10
+    },
+
+    "custom/launcher":{
+        "format": " ",
+        "on-click": "fuzzel",
+        "on-click-right": "killall fuzzel"
+    },
+    "custom/power":{
+        "format": " ",
+        "on-click": "bash ~/.local/bin/powermenu.sh",
+    },
+    "custom/updates":{
+        "format": "{} Update(s)",
+        "return-type": "json",
+        "interval": 600,
+        "exec": "~/.local/bin/statusbar/waybar-updates.sh 2> /dev/null",
+        "exec-if": "exit 0",
+        "on-click": "kitty -e paru -Syu && notify-send 'The system has been updated' "
+    },
+}

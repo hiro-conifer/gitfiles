@@ -1,0 +1,187 @@
+{
+    "layer": "top",
+    "position": "top",
+    "mod": "dock",
+    "exclusive": true,
+    "passtrough": false,
+    "gtk-layer-shell": true,
+    "height": 0,
+    "modules-left": [
+        "clock",
+        // "cpu",
+        // "memory",
+        "custom/weather",        
+        "wlr/workspaces"
+    ],
+    "modules-center": [
+        "hyprland/window"
+        //"clock"
+    ],
+    "modules-right": [
+        "tray",
+        "custom/updates",
+        "network",
+        "idle_inhibitor",
+        // "custom/language",
+        "pulseaudio",
+        "battery"
+    ],
+    "hyprland/window": {
+        "format": "{}",
+        "separate-outputs": true
+    },       
+    "wlr/workspaces": {
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1",
+        "all-outputs": true,
+        "on-click": "activate",
+        "format": "{icon}",
+        "persistent_workspaces": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": [],
+        "6": [],
+        "7": [],
+        "8": [],
+        "9": [],
+        "10": []
+        },        
+        "format-icons": {
+            "1": "web",
+            "2": "mail",
+            "3": "term",
+            "4": "media",
+            "5": "dev",
+            "6": "files",
+            "7": "chat",
+            "8": "gfx",
+            "9": "audio",
+            "10": "etc",
+            "urgent": ""
+        }
+    },
+    // "cpu": {
+    //     "interval": 10,
+    //     "format": " {}%",
+    //     "max-length": 10,
+    //     "on-click": ""
+    // },
+    // "memory": {
+    //     "interval": 30,
+    //     "format": " {}%",
+    //     "format-alt":" {used:0.1f}G",
+    //     "max-length": 10
+    // },
+    "custom/updates": {
+        //"exec": "(paru -Qua) | wc -l",
+        "format": " {}",
+        "return-type": "json",
+        "interval": 3600,
+        "exec": "~/.local/bin/statusbar/waybar-updates.sh 2> /dev/null",
+        "exec-if": "exit 0",
+        "on-click": "foot -e 'paru'; pkill -SIGRTMIN+8 waybar",
+        "signal": 8        
+    },
+    // "custom/language": {
+    //     "exec": "cat /tmp/kb_layout",
+    //     "interval": 3,
+    //     "format": " {}",
+    //     "tooltip": false
+    // },
+    "idle_inhibitor": {
+        "spacing": 10,
+        "icon-size": 13,        
+        "format": "{icon}",
+        "on-click-right": "~/.local/bin/statusbar/idleinhibit toggle",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },    
+    "custom/weather" : {
+        "tooltip" : true,
+        "format" : "{}",
+        "restart-interval" : 300,
+        "exec" : "~/.config/waybar/scripts/waybar-wttr.py",
+        "return-type" : "json"
+    },    
+    "tray": {
+        "icon-size": 13,
+        "tooltip": false,
+        "spacing": 10
+    },
+    "clock": {
+        "format": "{: %R   %d %B}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "tooltip": false,
+        "format-muted": " Muted",
+        "on-click": "~/.local/bin/statusbar/volumecontrol mute",
+        "on-scroll-up": "~/.local/bin/statusbar/volumecontrol up",
+        "on-scroll-down": "~/.local/bin/statusbar/volumecontrol down",
+        "scroll-step": 5,
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        }
+    },
+    // "pulseaudio": {
+    //     "format": "{icon} {volume}%",
+    //     "tooltip": false,
+    //     "format-muted": " Muted",
+    //     "on-click": "pamixer -t",
+    //     "on-scroll-up": "pamixer -i 5",
+    //     "on-scroll-down": "pamixer -d 5",
+    //     "scroll-step": 5,
+    //     "format-icons": {
+    //         "headphone": "",
+    //         "hands-free": "",
+    //         "headset": "",
+    //         "phone": "",
+    //         "portable": "",
+    //         "car": "",
+    //         "default": ["", "", ""]
+    //     }
+    // },    
+    "pulseaudio#microphone": {
+        "format": "{format_source}",
+        "tooltip": false,
+        "format-source": " {volume}%",
+        "format-source-muted": " Muted",
+        "on-click": "pamixer --default-source -t",
+        "on-scroll-up": "pamixer --default-source -i 5",
+        "on-scroll-down": "pamixer --default-source -d 5",
+        "scroll-step": 5
+    },
+    "battery": {
+        "bat": "BAT0",
+        "full-at": 95,
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon}  {capacity}%",
+        "format-charging": "{capacity}% ",
+        "format-plugged": "{capacity}% ",        
+        "format-icons": ["", "", "", "", ""]
+    },
+//-- Network ------------------------------
+"network": {
+    "format-wifi": "  ({signalStrength}%)",
+    "format-ethernet": "Connected  ",
+    "tooltip-format": "{essid} via {gwaddr}",
+    "format-linked": "{ifname} (No IP) ",
+    "format-disconnected": "Disconnected ⚠",
+    "format-alt": "{ifname}: {ipaddr}/{cidr}"
+}   
+}

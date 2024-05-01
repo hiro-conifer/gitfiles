@@ -1,0 +1,130 @@
+{
+  "layer": "top",
+  "position": "top",
+  /*"mode": "dock",*/
+  "height": 0,
+  "modules-left": [
+    "hyprland/workspaces",
+    "custom/player"
+  ],
+  "modules-center": [
+    "clock"
+  ],
+  "modules-right": [
+    "custom/arch-updates",
+    "tray",
+    "network",
+    "cpu",
+    "memory",
+    "backlight",
+    "pulseaudio",
+    "battery"
+  ],
+  "hyprland/workspaces": {
+    "all-outputs": true,
+    "disable-scroll": true,
+    "format": "{name}",
+    "on-click": "activate",
+    "sort-by-number": true,
+  },
+  "custom/player": {
+    "interval": 5,
+    "exec": "~/scripts/waybar/waybar_player",
+    "format": "Playing :    {}",
+    "return-type": "json",
+    "on-click": "playerctl play-pause",
+    "on-click-right": "playerctl next",
+    "on-click-middle": "playerctl previous"
+  },
+  "custom/arch-updates": {
+    "interval": 10,
+    "exec": "~/.config/waybar/scripts/arch-updates.sh",
+    "on-click": "kitty -T arch-updates bash -c 'yay; ~/.config/waybar/scripts/arch-updates.sh Refresh'&arch-updates",
+    "format": "{}",
+  },
+  "tray": {
+    "icon-size": 16,
+    "spacing": 12
+  },
+  "cpu": {
+    "interval": 6,
+    "format": "󰾆   {usage}",
+    "tooltip": true,
+    "on-click": "alacritty -t btop -e btop --utf-force"
+  },
+  "memory": {
+    "interval": 6,
+    "format": "󰍛   {used}"
+  },
+  "battery": {
+    "interval": 5,
+    "states": {
+      "good": 95,
+      "warning": 20,
+      "critical": 10
+    },
+    "format": "{icon}    {capacity}",
+    "format-charging": "⚡   {capacity}",
+    "format-plugged": "⚡   {capacity}",
+    "format-alt": "{time} {icon} ",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
+  },
+  "clock": {
+    "interval": 1,
+    "format": "{:%H:%M:%S  %a %d %B}",
+  },
+  "network": {
+    "interval": 2,
+    "format-wifi": "   {essid}  :  {bandwidthTotalBytes}",
+    "format-ethernet": " {essid}",
+    "format-linked": "{ifname} (No IP) ",
+    "format-disconnected": "! Disconnected",
+    "tooltip-format-wifi": "{signalStrength}% | ⬇ {bandwidthDownBits} ⬆ {bandwidthUpBits} | {ipaddr}/{cidr}",
+    "on-click": "kitty -T nmtui -e nmtui",
+  },
+  "backlight": {
+    "device": "intel_backlight",
+    "format": "{icon}  {percent}",
+    "format-icons": [
+      "🌌",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "🪩"
+    ],
+    "on-scroll-down": "brightnessctl set 1%+",
+    "on-scroll-up": "brightnessctl set 1%-",
+    "min-length": 5
+  },
+  "pulseaudio": {
+    "format": "{icon}  {volume}",
+    "format-muted": "🔇 sssh..",
+    "on-click": "pavucontrol",
+    "scroll-step": 1,
+    "format-icons": {
+      "headphone": "🎐",
+      "hands-free": "🎐",
+      "headset": "🎐",
+      "phone": "📞",
+      "portable": "📞",
+      "car": "",
+      "default": [
+        "☁️",
+        "🌧️",
+        "🌨️",
+        "🌩️",
+        "⛈️"
+      ]
+    }
+  }
+}
