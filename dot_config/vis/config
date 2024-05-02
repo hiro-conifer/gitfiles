@@ -1,0 +1,6 @@
+audio.sources=pulse
+colors.override.terminal=false
+audio.stereo.enabled=false
+visualizer.ellipse.character=" "
+visualizer.lorenz.character=" "
+colors.scheme=rainbow,dracula
