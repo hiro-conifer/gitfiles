@@ -1,33 +1,8 @@
-#!/bin/env bash
-
-#### Options ###
-power_off="  Shutdown"
-reboot="󰜉  Reboot"
-lock_screen="  Lock Screen"
-suspend="  Suspend"
-hibernate="󰒲  Hibernate"
-log_out="󰍃  Log Out"
-
-
-# Options passed to fuzzel
-options="$power_off\n$reboot\n$log_out\n$lock_screen"
-lines="$(echo "$options" | grep -oF '\n' | wc -l)"
-rofi_command="fuzzel -d -w 14 -l $((lines+1))"
-chosen="$(echo -e "$options" | $rofi_command )"
-case $chosen in
-    "$lock_screen")
-        hyprlock 
-        ;;    
-    "$power_off")
-        systemctl poweroff
-        ;;
-    "$reboot")
-        systemctl reboot
-        ;;
-    "$log_out")
-        if [[ "$DESKTOP_SESSION" == 'qtile' ]]; then
-            loginctl terminate-session "${XDG_SESSION_ID-}"
-        elif [[ "$DESKTOP_SESSION" == 'hyprland' ]]; then
-            hyprctl dispatch exit
-        fi        
-esac
+string=$(sed '1,/^### DATA ###$/d' $0 | cut -d= -f1 | wofi --show dmenu --sort-order alphabetical --normal-window --conf ~/.config/wofi/config_hz -s ~/.config/wofi/style_hz.css) &&
+	sed '1,/^### DATA ###$/d' $0 | grep "$string=" | sed 's/.*'"$string"'="\([^"]*\)".*/\1/' | sh
+exit
+### DATA ###
+⏻ poweroff="systemctl poweroff"
+↺ reboot="systemctl reboot"
+⏾ sleep="systemctl suspend"
+🗝 lock="hyprlock"
